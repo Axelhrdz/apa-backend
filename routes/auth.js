@@ -12,7 +12,7 @@ router.get('/test', (req, res) => {
 
 //------ Register Route ------
 router.post('/register', async (req, res) => {
-    const { username, email, password} = req.body;
+    const { username, email, numEmpleado, password} = req.body;
 
     try{
         //check missing fields
@@ -27,12 +27,13 @@ router.post('/register', async (req, res) => {
         }
 
         //All validation passed, create user
-        const user = await User.create({ username, email, password });
+        const user = await User.create({ username, email, numEmpleado, password });
         const token = generateToken(user._id);
         res.status(201).json({
             id: user._id,
             username: user.username,
             email: user.email,
+            numEmpleado: user.numEmpleado,
             token: token
         });
 
@@ -46,10 +47,10 @@ router.post('/register', async (req, res) => {
 //------ Login Route ------
 router.post('/login', async (req, res) => {
     try{
-        const { email, password } = req.body;
+        const { email, numEmpleado, password } = req.body;
 
         //check missing fields
-        if(!email || !password){
+        if(!email || !password || !numEmpleado){
             return res.status(400).json({ message: 'All fields are required' });
         }
 
@@ -67,6 +68,7 @@ router.post('/login', async (req, res) => {
             id: user._id,
             username: user.username,
             email: user.email,
+            numEmpleado: user.numEmpleado,
             token: token
         });
 
