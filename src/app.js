@@ -57,10 +57,19 @@ function txtFile (jsonData) {
     const accountsToProcess = [];
 
     jsonData.forEach(item => {
-        textChainformat = `${item['Recaudadora']},${item['Tipo']},${item['Cuenta']},N,,,,4,1,${item['Fecha de otorgamiento']},,H,N,0,${item['Recamaras']},${item['Banios']}}`;
+        textChainformat = `${item['Recaudadora']},${item['Tipo']},${item['Cuenta']},N,,,,4,1,${item['Fecha de otorgamiento']},,H,N,0,${item['Recamaras']},${item['Banios']}`;
 
         accountsToProcess.push(textChainformat);
     });
+
+
+    const txtContent = accountsToProcess.join('\n');
+    console.log(txtContent);
+
+    //write string into file
+    fs.writeFileSync('output.txt', txtContent, 'utf-8');
+    console.log('File written successfully');
+    
     return accountsToProcess;
 }
 
