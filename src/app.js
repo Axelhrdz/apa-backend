@@ -1,14 +1,28 @@
 import express from 'express';
+import cors from 'cors';
+import fileUpload from 'express-fileupload';
+// import multer from 'multer';
 
 
 //xlsx test
 import * as XLSX from 'xlsx';
 import * as fs from 'fs';
 
-
 const PORT = 3000;
-
 const app = express();
+
+//middleware
+app.use(cors({
+    origin: 'http://localhost:5173'
+}));
+
+app.use(fileUpload({ createParentPath: true }));
+
+app.use(express.json());
+
+app.use(express.urlencoded({
+    extended: true
+}));
 
 
 
@@ -81,7 +95,16 @@ app.get('/process-xlsx', (req, res) => {
 });
 
 
+app.post('/api/submit-xlsx', (req, res) => {
+    const formData = req.body;
+    // console.log(req.files);
+    console.log('data received from backend', formData, req.files.file);
 
+    res.status(200).send({
+        message: 'Data received from back',
+        data: formData
+    });
+});
 
 
 
@@ -89,7 +112,7 @@ app.get('/process-xlsx', (req, res) => {
 
 
 app.listen(PORT, () => {
-    // console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
 
 

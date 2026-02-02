@@ -27,4 +27,7 @@ Thumbs.db
 dist/
 build/
 
+#Files
+output.txt
+
 
