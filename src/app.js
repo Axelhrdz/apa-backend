@@ -3,26 +3,28 @@ import cors from 'cors';
 import fileUpload from 'express-fileupload';
 // import multer from 'multer';
 
-
 //xlsx test
 import * as XLSX from 'xlsx';
 import * as fs from 'fs';
 
+//routes
+import aperturasMasivasRoutes from './modules/aperturasMasivas/aperturasMasivas.routes.js';
+
+
 const PORT = 3000;
 const app = express();
 
+
 //middleware
-app.use(cors({
-    origin: 'http://localhost:5173'
-}));
-
+app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(fileUpload({ createParentPath: true }));
-
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use(express.urlencoded({
-    extended: true
-}));
+
+//------------- Routes modules -------------
+app.use('/aperturas_masivas', aperturasMasivasRoutes);
+app.use('/aperturas_masivas/test', aperturasMasivasRoutes);
 
 
 
@@ -105,6 +107,8 @@ app.post('/api/submit-xlsx', (req, res) => {
         data: formData
     });
 });
+
+
 
 
 
