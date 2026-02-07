@@ -3,7 +3,6 @@ import aperturasMasivasService from './aperturasMasivas.service.js';
 const aperturasMasivasController = async (req, res) => {
     try {
         const serviceResponse = await aperturasMasivasService(req);
-        console.log('Data received from controller Aperturas Masivas', serviceResponse);
 
         res.set({
             'Content-Disposition': 'attachment; filename=output.txt',

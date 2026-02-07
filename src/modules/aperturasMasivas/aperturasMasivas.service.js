@@ -1,13 +1,34 @@
 import * as XLSX from 'xlsx';
 
 
-const txtFile = (jsonData) => {
-    let textChainFormat = '';
+const defineAperturas = (jsonData, formData) => {
+    let conexionFormat;
+    let baldioToggle;
+    let aperturaFormat;
+
+    conexionFormat = `N,,,,${formData['conexiones']},${formData['cobros']}`;
+    
+    if(formData['tipo_predio'] === 'casa') {
+        baldioToggle = 'N';
+    } else {
+        baldioToggle = 'S';
+    }
+
+    aperturaFormat = `${jsonData['Recaudadora']},${jsonData['Tipo']},${jsonData['Cuenta']},${conexionFormat},${jsonData['Fecha de otorgamiento']},,H,${baldioToggle},0,${jsonData['Recamaras']},${jsonData['Banios']}`;
+    console.log(aperturaFormat);
+    console.log('--------------');
+
+    return aperturaFormat;
+
+};
+
+
+const txtFile = (jsonData, formData) => {
     const accountsToProcess = [];
 
     jsonData.forEach(account => {
-        textChainFormat = `${account['Recaudadora']},${account['Tipo']},${account['Cuenta']},N,,,,4,1,${account['Fecha de otorgamiento']},,H,N,0,${account['Recamaras']},${account['Banios']}`;
-        accountsToProcess.push(textChainFormat);
+       const accountFormat =  defineAperturas(account, formData);
+       accountsToProcess.push(accountFormat);
     });
     const txtContent = accountsToProcess.join('\n');
 
@@ -20,7 +41,6 @@ const aperturasMasivasService = async (req) => {
 
     try {
         //read file as buffer
-        // const fileBuffer = file.data.toString('base64');
         const workbook = XLSX.read(file.data, {type: 'buffer'});
 
         //get first worksheet name
@@ -32,10 +52,7 @@ const aperturasMasivasService = async (req) => {
 
 
         //txt file into variable
-        const txtFileOutput = txtFile(jsonData);
-        console.log('file output from service');
-        console.log(txtFileOutput);
-
+        const txtFileOutput = txtFile(jsonData, formData);
 
         return txtFileOutput;
         
