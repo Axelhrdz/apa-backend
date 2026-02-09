@@ -31,3 +31,5 @@ build/
 output.txt
 
 
+#all .xlsx files
+*.xlsx
