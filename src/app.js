@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import dotenv from 'dotenv';
 import fileUpload from 'express-fileupload';
 // import multer from 'multer';
 
@@ -11,7 +12,7 @@ import * as fs from 'fs';
 import aperturasMasivasRoutes from './modules/aperturasMasivas/aperturasMasivas.routes.js';
 
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const app = express();
 
 
