@@ -15,9 +15,12 @@ import aperturasMasivasRoutes from './modules/aperturasMasivas/aperturasMasivas.
 const PORT = process.env.PORT || 3000;
 const app = express();
 
+dotenv.config();
 
 //middleware
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(cors({ 
+    origin: process.env.FRONTEND_URL || 'http://localhost:5173'     
+}));
 app.use(fileUpload({ createParentPath: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -116,7 +119,7 @@ app.post('/api/submit-xlsx', (req, res) => {
 
 
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
