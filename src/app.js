@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //------------- Routes modules -------------
 app.use('/aperturas_masivas', aperturasMasivasRoutes);
-app.use('/aperturas_masivas/test', aperturasMasivasRoutes);
+// app.use('/aperturas_masivas/test', aperturasMasivasRoutes);
 app.use('/aperturas_masivas/apertura', aperturasMasivasRoutes);
 
 
