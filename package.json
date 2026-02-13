@@ -2,21 +2,26 @@
   "name": "apa-backend",
   "version": "1.0.0",
   "description": "APA Backend API",
-  "main": "src/server.js",
+  "main": "src/app.js",
   "type": "module",
   "scripts": {
-    "start": "node src/server.js",
+    "start": "node src/app.js",
     "dev": "nodemon src/app.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.6",
+    "debug": "^4.4.3",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-fileupload": "^1.5.2",
     "multer": "^2.0.2",
+    "router": "^2.2.0",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
