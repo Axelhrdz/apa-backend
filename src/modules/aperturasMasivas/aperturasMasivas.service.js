@@ -3,18 +3,20 @@ import * as XLSX from 'xlsx';
 
 const defineAperturas = (jsonData, formData) => {
     let conexionFormat;
-    let baldioToggle;
+    // let baldioToggle;
     let aperturaFormat;
 
     conexionFormat = `N,,,,${formData['conexiones']},${formData['cobros']}`;
-    
-    if(formData['tipo_predio'] === 'casa') {
-        baldioToggle = 'N';
-    } else {
-        baldioToggle = 'S';
-    }
 
-    aperturaFormat = `${jsonData['Recaudadora']},${jsonData['Tipo']},${jsonData['Cuenta']},${conexionFormat},${jsonData['Fecha de otorgamiento']},,H,${baldioToggle},0,${jsonData['Recamaras']},${jsonData['Banios']}`;
+    // console.log(conexionFormat);
+    
+    // if(formData['tipo_predio'] === 'casa') {
+    //     baldioToggle = 'N';
+    // } else {
+    //     baldioToggle = 'S';
+    // }
+
+    aperturaFormat = `${jsonData['Recaudadora']},${jsonData['Tipo']},${jsonData['Cuenta']},${conexionFormat},${jsonData['Fecha de otorgamiento']},,${formData['tipo_servicio']},${formData['baldio']},0,${jsonData['Recamaras']},${jsonData['Banios']}`;
     console.log(aperturaFormat);
     console.log('--------------');
 
