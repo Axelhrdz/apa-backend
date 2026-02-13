@@ -7,7 +7,7 @@ const aperturasMasivasController = async (req, res) => {
         res.set({
             'Content-Disposition': 'attachment; filename=output.txt',
             'Content-Type': 'text/plain',
-            'Content-Length': serviceResponse.length,
+            // 'Content-Length': serviceResponse.length,
         });
 
         res.send(serviceResponse);

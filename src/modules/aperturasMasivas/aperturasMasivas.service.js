@@ -1,24 +1,39 @@
 import * as XLSX from 'xlsx';
 
 
+const baldioToggle = (file, formData) => {
+    let sheetName;
+    const workbook = XLSX.read(file.data, {type: 'buffer'});
+
+    if(formData['baldio'] === 'S') {
+        sheetName = workbook.SheetNames[1];
+    } else {
+        sheetName = workbook.SheetNames[0];
+    }
+    
+    const worksheet = workbook.Sheets[sheetName];
+    const jsonData = XLSX.utils.sheet_to_json(worksheet);
+    console.log(jsonData);
+
+    return jsonData;
+};
+
 const defineAperturas = (jsonData, formData) => {
     let conexionFormat;
-    // let baldioToggle;
     let aperturaFormat;
+    let baldioValue;
+    console.log(baldioValue);
+
+    if(formData['baldio'] === 'S') {
+        baldioValue = jsonData['Metros cuadrados'];
+    } else {
+        baldioValue = '0';
+    }
 
     conexionFormat = `N,,,,${formData['conexiones']},${formData['cobros']}`;
 
-    // console.log(conexionFormat);
+    aperturaFormat = `${jsonData['Recaudadora']},${jsonData['Tipo']},${jsonData['Cuenta']},${conexionFormat},${jsonData['Fecha de otorgamiento']},,${formData['tipo_servicio']},${formData['baldio']},${baldioValue},${jsonData['Recamaras']},${jsonData['Banios']}`;
     
-    // if(formData['tipo_predio'] === 'casa') {
-    //     baldioToggle = 'N';
-    // } else {
-    //     baldioToggle = 'S';
-    // }
-
-    aperturaFormat = `${jsonData['Recaudadora']},${jsonData['Tipo']},${jsonData['Cuenta']},${conexionFormat},${jsonData['Fecha de otorgamiento']},,${formData['tipo_servicio']},${formData['baldio']},0,${jsonData['Recamaras']},${jsonData['Banios']}`;
-    console.log(aperturaFormat);
-    console.log('--------------');
 
     return aperturaFormat;
 
@@ -42,16 +57,7 @@ const aperturasMasivasService = async (req) => {
     const formData = req.body;
 
     try {
-        //read file as buffer
-        const workbook = XLSX.read(file.data, {type: 'buffer'});
-
-        //get first worksheet name
-        const firstSheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[firstSheetName];
-
-        //convert to an array of json obejcts
-        const jsonData = XLSX.utils.sheet_to_json(worksheet);
-
+        const jsonData = baldioToggle(file, formData);
 
         //txt file into variable
         const txtFileOutput = txtFile(jsonData, formData);
