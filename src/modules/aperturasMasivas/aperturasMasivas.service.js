@@ -13,7 +13,7 @@ const baldioToggle = (file, formData) => {
     
     const worksheet = workbook.Sheets[sheetName];
     const jsonData = XLSX.utils.sheet_to_json(worksheet);
-    console.log(jsonData);
+    // console.log(jsonData);
 
     return jsonData;
 };
@@ -22,7 +22,7 @@ const defineAperturas = (jsonData, formData) => {
     let conexionFormat;
     let aperturaFormat;
     let baldioValue;
-    console.log(baldioValue);
+    // console.log(baldioValue);
 
     if(formData['baldio'] === 'S') {
         baldioValue = jsonData['Metros cuadrados'];
