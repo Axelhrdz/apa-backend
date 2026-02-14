@@ -4,6 +4,8 @@ const aperturasMasivasController = async (req, res) => {
     try {
         const serviceResponse = await aperturasMasivasService(req);
 
+        console.log(req.body);
+
         const filename = req.body['folio'];
         console.log(filename);
 

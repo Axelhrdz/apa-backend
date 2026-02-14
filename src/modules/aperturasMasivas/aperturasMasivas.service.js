@@ -7,8 +7,14 @@ const baldioToggle = (file, formData) => {
 
     if(formData['baldio'] === 'S') {
         sheetName = workbook.SheetNames[1];
-    } else {
+    } else if(formData['baldio'] === 'N') {
         sheetName = workbook.SheetNames[0];
+    } else {
+        return {
+            message: 'Error in baldioToggle',
+            error: 'Baldio is not selected',
+            status: 400
+        }
     }
     
     const worksheet = workbook.Sheets[sheetName];
