@@ -1,6 +1,6 @@
 # Dependencies
 node_modules/
-package-lock.json
+# package-lock.json
 
 # Environment variables
 .env
@@ -31,3 +31,5 @@ build/
 output.txt
 
 
+#all .xlsx files
+*.xlsx
