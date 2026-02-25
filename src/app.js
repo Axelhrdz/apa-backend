@@ -4,12 +4,18 @@ import dotenv from 'dotenv';
 import fileUpload from 'express-fileupload';
 // import multer from 'multer';
 
+
+import connectDB from './config/database.js';
+connectDB();
+
+
 //xlsx test
 import * as XLSX from 'xlsx';
 import * as fs from 'fs';
 
 //routes
 import aperturasMasivasRoutes from './modules/aperturasMasivas/aperturasMasivas.routes.js';
+import authRoutes from './modules/auth/auth.routes.js';
 
 
 const PORT = process.env.PORT || 3000;
@@ -28,10 +34,14 @@ app.use(express.urlencoded({ extended: true }));
 
 
 //------------- Routes modules -------------
+//Aperturas Masivas
 app.use('/aperturas_masivas', aperturasMasivasRoutes);
 app.use('/aperturas_masivas/test', aperturasMasivasRoutes);
 app.use('/aperturas_masivas/apertura', aperturasMasivasRoutes);
 
+//Auth
+app.use('/auth', authRoutes);
+app.use('/auth/register', authRoutes);
 
 
 app.get('/', (req, res) => {
