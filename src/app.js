@@ -16,6 +16,7 @@ import * as fs from 'fs';
 //routes
 import aperturasMasivasRoutes from './modules/aperturasMasivas/aperturasMasivas.routes.js';
 import authRoutes from './modules/auth/auth.routes.js';
+import usersRoutes from './modules/users/user.routes.js';
 
 
 const PORT = process.env.PORT || 3000;
@@ -43,6 +44,10 @@ app.use('/aperturas_masivas/apertura', aperturasMasivasRoutes);
 app.use('/auth', authRoutes);
 app.use('/auth/register', authRoutes);
 
+
+//Users
+app.use('/users', usersRoutes);
+// app.use('/users/me', usersRoutes);
 
 app.get('/', (req, res) => {
     res.send({ message: 'APA BACKEND running from apertuas_masivas branch, new change' });

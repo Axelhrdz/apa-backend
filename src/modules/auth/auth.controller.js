@@ -9,11 +9,11 @@ const authController = async (req, res) => {
         console.log(serviceResponse);
 
         // res.status(200).send(serviceResponse);
-        res.status(201).json(serviceResponse);
+        res.status(serviceResponse.status ?? 201).json(serviceResponse);
     } catch (error) {
-        res.status(500).json({
+        res.status(serviceResponse.status ?? 500).json({
             message: 'Error in auth controller',
-            error: error.message
+            error: error.message,
         });
     }
 };

@@ -15,7 +15,7 @@ const authService = async (req) => {
 
     //----- generate token ----
     const generateToken = (id) => {
-        return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: '30d'});
+        return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: '30m'});
     }
 
 
@@ -32,19 +32,31 @@ const authService = async (req) => {
         
         //check missing fields
         if (!username || !numEmpleado || !email || !password) {
-            return res.status(400).json({ message: 'All fields are required' });
+            return {
+                message: 'All fields are required',
+                status: 400
+            }
         }
         
         //check if user already exists
-        const userExists = await User.findOne({email});
-        if(userExists){
-            console.log('User already exists');
-            
+        const emailExists = await User.findOne({email});
+        const numEmpleadoExists = await User.findOne({numEmpleado});
+        if(emailExists){
+            console.log('Email ya registrado');
             return {
-                message: 'User already exists',
+                message: 'Email ya registrado',
                 status: 400
             }
-        }else{
+
+
+        } else if (numEmpleadoExists){
+            console.log('Numero de empleado ya registrado');
+            return {
+                message: 'Numero de empleado ya registrado',
+                status: 400
+            }
+        }
+        else{
             //all validations passed, create user
             // console.log('New user to be created/registered');
             // console.log(req.body);
@@ -85,7 +97,8 @@ const authService = async (req) => {
         console.error('Error in auth service', error);
         return {
             message: 'Error in auth service',
-            error: error.message
+            error: error.message,
+            status: 500
         }
     }
 }
