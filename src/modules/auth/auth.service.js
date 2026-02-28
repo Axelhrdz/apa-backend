@@ -79,8 +79,10 @@ const authService = async (req) => {
             }
            
             return {
-                message: 'User created successfully',
-                user: userData,
+                // message: 'User created successfully',
+                // user: userData,
+                // token,
+                userData,
                 token,
                 status: 201
             }
