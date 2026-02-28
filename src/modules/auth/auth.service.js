@@ -2,29 +2,23 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../users/user.model.js';
 
-const authService = async (req) => {
-
-    //-----hashing here ----
-    const hashPassword = async (password) => {
-        const saltPassword = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, saltPassword);
-        // console.log(hashedPassword);
-        return hashedPassword;
-    }
+//-----hashing here ----
+const hashPassword = async (password) => {
+    const saltPassword = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, saltPassword);
+    // console.log(hashedPassword);
+    return hashedPassword;
+}
 
 
-    //----- generate token ----
-    const generateToken = (id) => {
-        return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: '30m'});
-    }
+//----- generate token ----
+const generateToken = (id) => {
+    return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: '30m'});
+}
 
 
-
-
+const registerService = async (req) => {
     try {
-        // console.log('getting response from auth service');
-
-       
         const { username, numEmpleado, email, password } = req.body;
         const hashedPassword = await hashPassword(password);
         // console.log(hashedPassword);
@@ -107,4 +101,62 @@ const authService = async (req) => {
 
 
 
-export default authService;
+
+/*--------------login service --------------*/
+const loginService = async (req) => {
+    try {
+        console.log(req.body);
+        const { email, numEmpleado, password } = req.body;
+
+        if (!email || !numEmpleado || !password) {
+            return {
+                message: 'All fields are required',
+                status: 400
+            }
+        }
+
+        const user = await User.findOne({email});
+        if (!user) {
+            return {
+                message: 'User not found',
+                status: 404
+            }
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return {
+                message: 'Invalid password',
+                status: 400
+            }
+        }
+
+        const token = generateToken(user._id);
+
+        const userData = {
+            username: user.username,
+            numEmpleado: user.numEmpleado,
+            email: user.email,
+            token: token
+        }
+
+        return {
+            message: 'From login service',
+            userData,
+            token,
+            status: 200
+        }
+    } catch (error) {
+        console.error('Error in login service', error);
+        return {
+            message: 'Error in login service',
+            error: error.message,
+            status: 500
+        }
+    }
+}
+
+
+
+// export default authService;
+export { registerService, loginService };

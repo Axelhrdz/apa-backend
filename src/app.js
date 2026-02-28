@@ -44,6 +44,8 @@ app.use('/aperturas_masivas/apertura', aperturasMasivasRoutes);
 app.use('/auth', authRoutes);
 app.use('/auth/register', authRoutes);
 
+app.use('/auth/login', authRoutes);
+
 
 //Users
 app.use('/users', usersRoutes);
