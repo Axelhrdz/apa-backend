@@ -1,8 +1,9 @@
-import authService from './auth.service.js';
+// import authService from './auth.service.js';
+import { registerService, loginService } from './auth.service.js';
 
-const authController = async (req, res) => {
+export const registerController = async (req, res) => {
     try {
-        const serviceResponse = await authService(req, res);
+        const serviceResponse = await registerService(req, res);
 
         // console.log('auth - register route working');
 
@@ -18,5 +19,19 @@ const authController = async (req, res) => {
     }
 };
 
+/*--------------login controller --------------*/
+export const loginController = async (req, res) => {
+    try {
+        const serviceResponse = await loginService(req, res);
 
-export default authController;
+        console.log(serviceResponse);
+
+        res.status(serviceResponse.status ?? 200).json(serviceResponse);
+    } catch (error) {
+        res.status(serviceResponse.status ?? 500).json({
+            message: 'Error in auth controller',
+            error: error.message,
+        });
+    }
+}
+// export default authController;
