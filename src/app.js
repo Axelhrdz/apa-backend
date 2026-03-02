@@ -4,12 +4,19 @@ import dotenv from 'dotenv';
 import fileUpload from 'express-fileupload';
 // import multer from 'multer';
 
+
+import connectDB from './config/database.js';
+connectDB();
+
+
 //xlsx test
 import * as XLSX from 'xlsx';
 import * as fs from 'fs';
 
 //routes
 import aperturasMasivasRoutes from './modules/aperturasMasivas/aperturasMasivas.routes.js';
+import authRoutes from './modules/auth/auth.routes.js';
+import usersRoutes from './modules/users/user.routes.js';
 
 
 const PORT = process.env.PORT || 3000;
@@ -19,7 +26,8 @@ dotenv.config();
 
 //middleware
 app.use(cors({ 
-    origin: 'https://apa-frontend-liard.vercel.app'   
+    // origin: 'https://apa-frontend-liard.vercel.app'
+    origin: 'https://apa-frontend-git-dev-axelhrdzs-projects.vercel.app'
     // origin: 'http://localhost:5173'    
 }));
 app.use(fileUpload({ createParentPath: true }));
@@ -28,11 +36,21 @@ app.use(express.urlencoded({ extended: true }));
 
 
 //------------- Routes modules -------------
+//Aperturas Masivas
 app.use('/aperturas_masivas', aperturasMasivasRoutes);
 app.use('/aperturas_masivas/test', aperturasMasivasRoutes);
 app.use('/aperturas_masivas/apertura', aperturasMasivasRoutes);
 
+//Auth
+app.use('/auth', authRoutes);
+app.use('/auth/register', authRoutes);
 
+app.use('/auth/login', authRoutes);
+
+
+//Users
+app.use('/users', usersRoutes);
+// app.use('/users/me', usersRoutes);
 
 app.get('/', (req, res) => {
     res.send({ message: 'APA BACKEND running from apertuas_masivas branch, new change' });
