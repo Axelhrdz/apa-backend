@@ -26,9 +26,9 @@ dotenv.config();
 
 //middleware
 app.use(cors({ 
-    // origin: 'https://apa-frontend-liard.vercel.app'
+    origin: 'https://apa-frontend-liard.vercel.app'
     // origin: 'https://apa-frontend-git-dev-axelhrdzs-projects.vercel.app'
-    origin: 'http://localhost:5173'    
+    // origin: 'http://localhost:5173'    
 }));
 app.use(fileUpload({ createParentPath: true }));
 app.use(express.json());
