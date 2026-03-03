@@ -1,4 +1,6 @@
 import * as XLSX from 'xlsx';
+// import { body, validationResult } from 'express-validator';
+
 
 
 const baldioToggle = (file, formData) => {
@@ -24,11 +26,19 @@ const baldioToggle = (file, formData) => {
     return jsonData;
 };
 
+
 const defineAperturas = (jsonData, formData) => {
+
+    console.log(jsonData);
+    console.log(formData);
+    
+
+
     let conexionFormat;
     let aperturaFormat;
     let baldioValue;
     // console.log(baldioValue);
+
 
     if(formData['baldio'] === 'S') {
         baldioValue = jsonData['Metros cuadrados'];
@@ -47,6 +57,9 @@ const defineAperturas = (jsonData, formData) => {
 
 
 const txtFile = (jsonData, formData) => {
+    
+
+
     const accountsToProcess = [];
 
     jsonData.forEach(account => {
@@ -60,7 +73,7 @@ const txtFile = (jsonData, formData) => {
 
 const aperturasMasivasService = async (req) => {
     const file = req.files.file;
-    const formData = req.body;
+    const formData = req.validatedData;
 
     try {
         const jsonData = baldioToggle(file, formData);

@@ -1,12 +1,19 @@
 import aperturasMasivasService from './aperturasMasivas.service.js';
+// import { body,dataValidation } from './aperturasMasivas.service.js';
+
+
 
 const aperturasMasivasController = async (req, res) => {
     try {
         const serviceResponse = await aperturasMasivasService(req);
 
-        console.log(req.body);
+        // console.log('------ this is the body ------');
+        // console.log(req.body);
 
-        const filename = req.body['folio'];
+        // console.log('this is the validated data');
+        // console.log(req.validatedData);
+
+        const filename = req.validatedData['folio'];
         console.log(filename);
 
         res.set({
