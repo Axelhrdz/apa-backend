@@ -43,7 +43,17 @@ import os from 'os';
 const apaAccessService = async (txtFileOutput, formData, url, timeout = 5000) => {
     console.log('FORM DATA', formData);
     try{
-        const browser = await chromium.launch({ headless: true });
+        const browser = await chromium.launch({
+            headless: true,
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-gpu',
+                '--disable-extensions',
+                '--single-process',
+            ],
+        });
         const context = await browser.newContext();
         const page = await context.newPage();
 
