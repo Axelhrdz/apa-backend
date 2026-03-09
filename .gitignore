@@ -33,3 +33,10 @@ output.txt
 
 #all .xlsx files
 *.xlsx
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
