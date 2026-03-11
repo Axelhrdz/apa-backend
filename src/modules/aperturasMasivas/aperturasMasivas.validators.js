@@ -2,6 +2,8 @@ import { body, validationResult, matchedData } from 'express-validator';
 
 const validateData = [
     body('folio').notEmpty().trim().escape().withMessage('Folio is required'),
+    body('localidad').notEmpty().trim().escape().withMessage('Localidad is required'),
+    body('colonia').notEmpty().trim().escape().withMessage('Colonia is required'),
     body('file').custom((value, { req }) => {
         if (!req.files?.file) throw new Error('File is required');
         const file = req.files.file;

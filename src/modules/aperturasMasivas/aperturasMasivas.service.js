@@ -1,4 +1,5 @@
 import * as XLSX from 'xlsx';
+import { apaAccessService } from './aperturasMasivas.playwright.service.js';
 // import { body, validationResult } from 'express-validator';
 
 
@@ -71,6 +72,12 @@ const txtFile = (jsonData, formData) => {
     return txtContent;
 }
 
+
+
+
+
+
+
 const aperturasMasivasService = async (req) => {
     const file = req.files.file;
     const formData = req.validatedData;
@@ -81,7 +88,22 @@ const aperturasMasivasService = async (req) => {
         //txt file into variable
         const txtFileOutput = txtFile(jsonData, formData);
 
-        return txtFileOutput;
+        // const aperturasAPAOutput = await aperturasMasivasPlaywright(txtFileOutput, 'http://services.tlajomulco.gob.mx:1080/apa/');
+
+        const urlAccess = await apaAccessService(
+            txtFileOutput, 
+            formData, 
+            'http://services.tlajomulco.gob.mx:1080/apa/',
+            // 'http://172.16.11.58/apa/',
+        );
+        console.log('urlAccess', urlAccess);
+
+        return {
+            message: 'Aperturas masivas APA donde sucessfully',
+            // txtFileOutput,
+            // aperturasAPAOutput,
+            urlAccess,
+        }
         
     } catch (error) {
         console.error('Error in aperturas masivas service', error);
@@ -90,6 +112,10 @@ const aperturasMasivasService = async (req) => {
             error: error.message
         }
     }
+
+
+
+    
 }
 
 export default aperturasMasivasService;
