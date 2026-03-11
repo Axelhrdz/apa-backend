@@ -90,7 +90,12 @@ const aperturasMasivasService = async (req) => {
 
         // const aperturasAPAOutput = await aperturasMasivasPlaywright(txtFileOutput, 'http://services.tlajomulco.gob.mx:1080/apa/');
 
-        const urlAccess = await apaAccessService(txtFileOutput, formData, 'http://services.tlajomulco.gob.mx:1080/apa/');
+        const urlAccess = await apaAccessService(
+            txtFileOutput, 
+            formData, 
+            'http://services.tlajomulco.gob.mx:1080/apa/',
+            // 'http://172.16.11.58/apa/',
+        );
         console.log('urlAccess', urlAccess);
 
         return {
