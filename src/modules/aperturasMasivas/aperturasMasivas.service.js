@@ -1,8 +1,10 @@
 import * as XLSX from 'xlsx';
 import { apaAccessService } from './aperturasMasivas.playwright.service.js';
 // import { body, validationResult } from 'express-validator';
+import dotenv from 'dotenv';
 
 
+dotenv.config();
 
 const baldioToggle = (file, formData) => {
     let sheetName;
@@ -73,14 +75,10 @@ const txtFile = (jsonData, formData) => {
 }
 
 
-
-
-
-
-
 const aperturasMasivasService = async (req) => {
     const file = req.files.file;
     const formData = req.validatedData;
+    let response = {};
 
     try {
         const jsonData = baldioToggle(file, formData);
@@ -93,24 +91,46 @@ const aperturasMasivasService = async (req) => {
         const urlAccess = await apaAccessService(
             txtFileOutput, 
             formData, 
-            'http://services.tlajomulco.gob.mx:1080/apa/',
+            // 'http://services.tlajomulco.gob.mx:1080/apa/',
             // 'http://172.16.11.58/apa/',
+            process.env.APA_BASE_URL
         );
-        console.log('urlAccess', urlAccess);
 
-        return {
-            message: 'Aperturas masivas APA donde sucessfully',
-            // txtFileOutput,
-            // aperturasAPAOutput,
-            urlAccess,
+
+        // console.log(urlAccess);
+
+        if(urlAccess.success && urlAccess.status === 200) {
+            response = {
+                success: true,
+                message: urlAccess.message,
+                status: urlAccess.status,
+            }
+        } else if(!urlAccess.success && urlAccess.status === 502) {
+            response = {
+                success: false,
+                message: urlAccess.message,
+                status: urlAccess.status,
+                error: urlAccess.error,
+            }
+        } else if (!urlAccess.success) {
+            response = {
+                success: false,
+                message: 'Error en aperturas masivas service',
+                error: urlAccess.error,
+                status: 500,
+            }
         }
+
+        return response;
+        
         
     } catch (error) {
-        console.error('Error in aperturas masivas service', error);
-        return {
-            message: 'Error in aperturas masivas service',
-            error: error.message
-        }
+         return {
+            success: false,
+            message: 'Error en aperturas masivas service',
+            error: 'Error en aperturas masivas service',
+            status: 500,
+         };
     }
 
 
