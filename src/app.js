@@ -18,17 +18,27 @@ import aperturasMasivasRoutes from './modules/aperturasMasivas/aperturasMasivas.
 import authRoutes from './modules/auth/auth.routes.js';
 import usersRoutes from './modules/users/user.routes.js';
 
+dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-dotenv.config();
+
+const allowedOrigins = process.env.CORS_ALLOWED_ORIGINS
+    ? process.env.CORS_ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
+    : [];
+
+    
 
 //middleware
 app.use(cors({ 
-    origin: 'https://apa-frontend-liard.vercel.app'
-    // origin: 'https://apa-frontend-git-dev-axelhrdzs-projects.vercel.app'
-    // origin: 'http://localhost:5173'
+    origin: function (origin, callback) {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+        return callback(new Error('Not allowed by CORS'));
+    }
 }));
 app.use(fileUpload({ createParentPath: true }));
 app.use(express.json());

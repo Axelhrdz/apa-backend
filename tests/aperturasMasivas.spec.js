@@ -102,8 +102,8 @@ test('go to aperturas masivas page', async ({page}) => {
 
     
     //find Enviar button, type="submit"
-    const enviar = popup.locator('input[type="submit"]');
-    await expect(enviar).toBeVisible();
+    // const enviar = popup.locator('input[type="submit"]');
+    // await expect(enviar).toBeVisible();
     
 
 

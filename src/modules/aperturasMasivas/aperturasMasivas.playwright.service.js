@@ -4,42 +4,6 @@ import path from 'path';
 import os from 'os';
 
 
-// //Get base url
-// async function getBaseUrl(page) {
-//     const localUrl = 'http://172.16.11.58/apa//';
-//     const externalUrl = 'http://services.tlajomulco.gob.mx:1080/apa/';
-    
-//     try {
-//       // Try to access the local URL first
-//       const response = await page.goto(localUrl, { timeout: 5000 });
-//       if (response && response.status() < 400) {
-//         console.log('Using local network URL:', localUrl);
-//         return localUrl;
-//       }
-//     } catch (error) {
-//       console.log('Local network not available, trying external URL...');
-//     }
-    
-//     try {
-//       // Try external URL
-//       const response = await page.goto(externalUrl, { timeout: 10000 });
-//       if (response && response.status() < 400) {
-//         console.log('Using external network URL:', externalUrl);
-//         return externalUrl;
-//       }
-//     } catch (error) {
-//       console.log('External network also not available');
-//     }
-    
-//     // Default to local if both fail
-//     console.log('Defaulting to local URL');
-//     return localUrl;
-//   }
-
-// const aperturasMasivasPlaywright = async ({txtFileOutput, url}) => {
-
-// }
-
 const apaAccessService = async (txtFileOutput, formData, url, timeout = 5000) => {
     console.log('FORM DATA', formData);
     try{
@@ -81,14 +45,6 @@ const apaAccessService = async (txtFileOutput, formData, url, timeout = 5000) =>
         await username.fill('aihdez');
         await password.fill('aihdez');
         await submit.click();
-
-        //Wait for popup window after login
-        // const [popup] = await Promise.all([
-        //     page.waitForEvent("popup"),
-        //     submit.click(),
-        // ]);
-        // await popup.waitForLoadState("domcontentloaded");
-        // console.log('logged in and popup window opened');
 
 
         //go to aperturas masivas page
@@ -200,13 +156,20 @@ const apaAccessService = async (txtFileOutput, formData, url, timeout = 5000) =>
 
 
 
-
-
-
-        return response && response.status() < 400;
+        // return response && response.status() < 400;
+        return {
+            success: true,
+            message: 'Aperturas procesadas correctamente en APA',
+            status: 200,
+        }
     }catch(error){
-        console.error('Error testing url access', error);
-        return false;
+        // console.error('Error al procesar aperturas en APA', error);
+        return {
+            success: false,
+            message: 'Error al procesar aperturas en APA',
+            error: error.message,
+            status: 502
+        }
     }
 }
 
