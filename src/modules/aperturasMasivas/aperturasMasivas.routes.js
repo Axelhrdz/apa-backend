@@ -10,6 +10,7 @@ router.get('/', (req, res) => {
         
 });
 router.get('/test', (req, res) => {
+    console.log(req.file);
     res.send({message: 'test of route working v2'});
 });
 router.post('/apertura', validateData, validate, aperturasMasivasController);
