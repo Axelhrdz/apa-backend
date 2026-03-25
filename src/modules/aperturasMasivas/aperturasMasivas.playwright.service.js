@@ -2,7 +2,9 @@ import { chromium } from 'playwright';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
+import dotenv from 'dotenv';
 
+dotenv.config();
 
 const apaAccessService = async (txtFileOutput, formData, url, timeout = 5000) => {
     console.log('FORM DATA', formData);
@@ -42,8 +44,8 @@ const apaAccessService = async (txtFileOutput, formData, url, timeout = 5000) =>
         await submit.waitFor({ state: 'visible', timeout: 5000 });
         // await testInput.waitFor({ state: 'visible', timeout: 5000 });
 
-        await username.fill('aihdez');
-        await password.fill('aihdez');
+        await username.fill(process.env.APA_USERNAME);
+        await password.fill(process.env.APA_PASSWORD);
         await submit.click();
 
 

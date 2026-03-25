@@ -40,3 +40,17 @@ output.txt
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# test files
+tests/
+tests/**
+tests/**/**
+tests/**/**/**
+tests/**/**/**/**
+tests/**/**/**/**/**
+tests/**/**/**/**/**/**
+tests/**/**/**/**/**/**/**
+tests/**/**/**/**/**/**/**/**
+tests/**/**/**/**/**/**/**/**/**
+tests/**/**/**/**/**/**/**/**/**/**
+tests/**/**/**/**/**/**/**/**/**/**/**
