@@ -49,8 +49,8 @@ test('go to aperturas masivas page', async ({page}) => {
     await expect(submit).toBeVisible();
 
 
-    await username.fill('aihdez');
-    await password.fill('aihdez');
+    await username.fill(process.env.APA_USERNAME);
+    await password.fill(process.env.APA_PASSWORD);
     
 
     //Wait for popup window after login
