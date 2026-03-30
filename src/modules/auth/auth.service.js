@@ -76,7 +76,7 @@ const registerService = async (req) => {
                 // message: 'User created successfully',
                 // user: userData,
                 // token,
-                userData,
+                user: userData,
                 token,
                 status: 201
             }
@@ -142,7 +142,7 @@ const loginService = async (req) => {
 
         return {
             message: 'From login service',
-            userData,
+            user: userData,
             token,
             status: 200
         }
