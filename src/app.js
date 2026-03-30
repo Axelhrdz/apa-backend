@@ -14,6 +14,7 @@ import aperturasMasivasRoutes from './modules/aperturasMasivas/aperturasMasivas.
 import authRoutes from './modules/auth/auth.routes.js';
 import usersRoutes from './modules/users/user.routes.js';
 import previewExcelRoutes from './modules/preview-excel/previewExcel.routes.js';
+import autosufRoutes from './modules/autosuficientes-masivas/autosuf.routes.js';
 
 dotenv.config();
 
@@ -47,6 +48,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/aperturas_masivas', aperturasMasivasRoutes);
 app.use('/aperturas_masivas/test', aperturasMasivasRoutes);
 app.use('/aperturas_masivas/apertura', aperturasMasivasRoutes);
+
+//Autosuficientes Masivos
+app.use('/autosuficientes_masivas', autosufRoutes);
 
 //Preview Excel
 app.use('/preview-excel', previewExcelRoutes);
