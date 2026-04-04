@@ -12,8 +12,8 @@ const hashPassword = async (password) => {
 
 
 //----- generate token ----
-const generateToken = (id) => {
-    return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: '30m'});
+const generateToken = (id, role = 'user') => {
+    return jwt.sign({id, role}, process.env.JWT_SECRET, {expiresIn: '30m'});
 }
 
 
@@ -61,15 +61,17 @@ const registerService = async (req) => {
                 numEmpleado,
                 email,
                 password: hashedPassword,
+                role: 'user'
             });
-            const token = generateToken(user._id);
+            const token = generateToken(user._id, user.role);
 
             // console.log(user);
             const userData = {
                 username: user.username,
                 numEmpleado: user.numEmpleado,
                 email: user.email,
-                token: token
+                role: user.role,
+                // token: token
             }
            
             return {
@@ -115,7 +117,7 @@ const loginService = async (req) => {
             }
         }
 
-        const user = await User.findOne({email});
+        const user = await User.findOne({email, numEmpleado});
         if (!user) {
             return {
                 message: 'User not found',
@@ -131,13 +133,14 @@ const loginService = async (req) => {
             }
         }
 
-        const token = generateToken(user._id);
+        const token = generateToken(user._id, user.role);
 
         const userData = {
             username: user.username,
             numEmpleado: user.numEmpleado,
             email: user.email,
-            token: token
+            role: user.role,
+            // token: token
         }
 
         return {
