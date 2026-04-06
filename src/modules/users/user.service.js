@@ -4,6 +4,9 @@ const userService = async (req) => {
     try {
         const { id } = req.user;
         const user = await User.findById(id).select('-password');
+        // console.log(user);
+
+
         if (!user) {
             return {
                 message: 'User not found',
@@ -25,4 +28,14 @@ const userService = async (req) => {
     }
 }
 
-export default userService;
+
+const adminService = async (req) => {
+    const { id } = req.user;
+    // console.log(id);
+    return {
+        message: 'From admin service',
+        status: 200
+    }
+}
+
+export { userService, adminService };
