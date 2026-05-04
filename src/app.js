@@ -15,6 +15,7 @@ import authRoutes from './modules/auth/auth.routes.js';
 import usersRoutes from './modules/users/user.routes.js';
 import previewExcelRoutes from './modules/preview-excel/previewExcel.routes.js';
 import autosufRoutes from './modules/autosuficientes-masivas/autosuf.routes.js';
+import padronesRoutes from './modules/padrones/padrones.routes.js';
 
 dotenv.config();
 
@@ -87,6 +88,10 @@ app.use('/autosuficientes_masivas', autosufRoutes);
 app.use('/preview-excel', previewExcelRoutes);
 
 
+//Padrones
+app.use('/padrones', padronesRoutes);
+
+
 //Auth
 app.use('/auth', authRoutes);
 app.use('/auth/register', authRoutes);
@@ -102,6 +107,11 @@ app.get('/', (req, res) => {
     res.send({ message: 'APA BACKEND running from apertuas_masivas branch, new change' });
 });
 
+
+app.get('/testing-dev', (req,res) => {
+    console.log('Testing dev from remote dev and linux local home lab');
+    res.send({ message: 'Testing dev from remote dev and linux local home lab' });
+});
 
 
 
