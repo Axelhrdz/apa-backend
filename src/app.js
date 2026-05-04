@@ -26,13 +26,44 @@ const allowedOrigins = process.env.CORS_ALLOWED_ORIGINS
     ? process.env.CORS_ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
     : [];
 
-    
+function isNgrokOrigin(origin) {
+    if (!origin) return false;
+    try {
+        const host = new URL(origin).hostname.toLowerCase();
+        return (
+            host.endsWith('.ngrok-free.app') ||
+            host.endsWith('.ngrok-free.dev') ||
+            host.endsWith('.ngrok.app') ||
+            host.endsWith('.ngrok.io') ||
+            host.endsWith('.ngrok.dev')
+        );
+    } catch {
+        return false;
+    }
+}
+
+/** Public site on Cloudflare (www, apex, or future subdomains). */
+function isApaAsistenteSiteOrigin(origin) {
+    if (!origin) return false;
+    try {
+        const host = new URL(origin).hostname.toLowerCase();
+        return host === 'apa-asistente.site' || host.endsWith('.apa-asistente.site');
+    } catch {
+        return false;
+    }
+}
 
 //middleware
 app.use(cors({ 
     origin: function (origin, callback) {
         if (!origin) return callback(null, true);
         if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+        if (isNgrokOrigin(origin)) {
+            return callback(null, true);
+        }
+        if (isApaAsistenteSiteOrigin(origin)) {
             return callback(null, true);
         }
         return callback(new Error('Not allowed by CORS'));
