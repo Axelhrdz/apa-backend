@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { padronOldController } from './padrones.controller.js';
-import padron_old from './padronesOld.model.js';
 
 const router = Router();
 
