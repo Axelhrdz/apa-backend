@@ -6,7 +6,7 @@ dotenv.config();
 
 const padronOldService = async () => {
     try {
-        const padrones = await padronesOld.find();
+        const padrones = await padronesOld.find().sort({ _id: 1 }).limit(2).lean();
         return {
             padrones,
             status: 200
