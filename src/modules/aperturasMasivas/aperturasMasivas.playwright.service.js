@@ -4,6 +4,7 @@ import path from 'path';
 import os from 'os';
 import dotenv from 'dotenv';
 
+dotenv.config();
 
 const apaAccessService = async (txtFileOutput, formData, url, timeout = 5000) => {
     console.log('FORM DATA', formData);
@@ -169,7 +170,7 @@ const apaAccessService = async (txtFileOutput, formData, url, timeout = 5000) =>
             success: false,
             message: 'Error al procesar aperturas en APA',
             error: error.message,
-            status: 502
+            status: 500
         }
     }
 }
