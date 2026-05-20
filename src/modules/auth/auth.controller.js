@@ -12,7 +12,7 @@ export const registerController = async (req, res) => {
         // res.status(200).send(serviceResponse);
         res.status(serviceResponse.status ?? 201).json(serviceResponse);
     } catch (error) {
-        res.status(serviceResponse.status ?? 500).json({
+        res.status(500).json({
             message: 'Error in auth controller',
             error: error.message,
         });
@@ -28,7 +28,7 @@ export const loginController = async (req, res) => {
 
         res.status(serviceResponse.status ?? 200).json(serviceResponse);
     } catch (error) {
-        res.status(serviceResponse.status ?? 500).json({
+        res.status(500).json({
             message: 'Error in auth controller',
             error: error.message,
         });
